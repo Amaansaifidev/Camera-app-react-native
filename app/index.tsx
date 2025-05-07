@@ -5,11 +5,12 @@ import { Button, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-n
 import { Camera } from 'expo-camera';
 
 export default function App() {
+  // variables
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
   const cameraRef = useRef<Camera>(null);
-
+//check if permission granted
   useEffect(() => {
     if (!mediaPermission?.granted) {
       requestMediaPermission();
@@ -26,11 +27,11 @@ export default function App() {
       </View>
     );
   }
-
+//toggle camera facing
   function toggleCameraFacing() {
     setFacing(current => (current === 'back' ? 'front' : 'back'));
   }
-
+// take photo function
   async function takePhoto() {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
@@ -46,6 +47,7 @@ export default function App() {
   }
 
   return (
+    // main app
     <View style={styles.container}>
       <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
         <View style={styles.buttonContainer}>
@@ -60,7 +62,7 @@ export default function App() {
     </View>
   );
 }
-
+//styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
